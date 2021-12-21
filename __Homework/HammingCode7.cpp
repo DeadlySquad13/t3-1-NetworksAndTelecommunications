@@ -203,9 +203,6 @@ BitVector decode(BitVector hammingCode)
         numberOfCheckingBits++;
     } while(checkingBitIndex <= hammingCodeSize);
 
-     
-    //int j = 0;
-
     int informationVectorSize = hammingCodeSize + numberOfCheckingBits;
     BitVector informationVector;
 
@@ -216,18 +213,6 @@ BitVector decode(BitVector hammingCode)
             informationVector.push_back(el);
         }
     }
-
-    // Iterate to update the code.
-    //for (int i = 0; i < hammingCodeSize; i++)
-    //{
-        //// Placing msgBits where -1 is
-        //// absent i.e., except checking
-        //// bits all positions are msgBits.
-        //if (hammingCode[i] != -1) {
-            //hammingCode[i] = msgBits[j];
-            //j++;
-        //}
-    //}
 
     return informationVector;
 }
@@ -256,8 +241,6 @@ std::pair<unsigned, unsigned> testWithErrorVectors(
     }
  
     do {
-        //cout << "\n" << errorVector;
-
         // Hamming code distorted by noise (by errorVector).
         BitVector distortedVector = errorVector;
 
@@ -267,8 +250,6 @@ std::pair<unsigned, unsigned> testWithErrorVectors(
             distortedVector.begin(), // Result.
             std::bit_xor<int>() // Operation.
         );
-
-        //cout << distortedVector;
 
         // Calculating syndrome.
         int syndrome = calculateSyndrome(distortedVector);
@@ -308,16 +289,9 @@ int main()
     // Init.
     BitVector informationVector = { 1, 1, 0, 0 };
 
-    //cout << "Information code is: ";
-    //cout << informationVector;
- 
     // Encoding.
     BitVector hammingCode = encode(informationVector);
  
-    // * Print encoding result.
-    //cout << "\nHamming code is: ";
-    //cout << hammingCode;
-
     int hammingCodeSize = hammingCode.size();
 
     printCell("i");
